@@ -1,0 +1,7 @@
+.table {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(262px, 1fr));
+  gap: 10px;
+  margin: 44px auto 0 auto;
+  max-width: 1200px;
+}

@@ -1,0 +1,27 @@
+.progressLine {
+  display: flex;
+  justify-content: flex-end;
+  background: bisque;
+  height: 12px;
+  border-radius: 6px;
+}
+
+.progressLineContainer {
+  position: absolute;
+  width: 100%;
+  padding: 0 40px;
+  box-sizing: border-box;
+  top: 80px;
+}
+
+.percent {
+  display: flex;
+  justify-content: center;
+  font-size: 10px;
+  margin: 0 6px 0 0;
+}
+
+.percent_begin {
+  position: absolute;
+  left: 42px;
+}

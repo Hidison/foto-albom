@@ -1,0 +1,3 @@
+export const SET_FILE = "SET_FILE";
+export const SET_FILE_UPLOAD_ERROR = "SET_FILE_UPLOAD_ERROR";
+export const SET_IS_UPLOAD_FILE = "SET_IS_UPLOAD_FILE";

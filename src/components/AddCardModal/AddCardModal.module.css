@@ -1,0 +1,115 @@
+.form {
+  width: 100%;
+  min-width: 520px;
+}
+
+.input {
+  width: 130px;
+  font-size: 16px;
+  color: transparent;
+}
+
+.input ::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+.input::before {
+  content: "Выберите файл";
+  color: #ff9966;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  border: 1px solid #ff9966;
+  border-radius: 3px;
+  padding: 5px 8px;
+  outline: none;
+  white-space: nowrap;
+  font-size: 15px;
+  height: 22px;
+  margin-right: 6px;
+}
+
+.input:hover::before {
+  cursor: pointer;
+  background-color: aliceblue;
+  transition: all 0.4s;
+}
+
+.submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 20px auto 0 auto;
+  width: 126px;
+  height: 34px;
+}
+
+.submit:hover {
+  cursor: pointer;
+}
+
+.formText {
+  font-size: 13px;
+  line-height: 16px;
+  margin: 0 0 0 8px;
+  max-width: 316px;
+}
+
+.errorText {
+  color: red;
+}
+
+.uploadFileButton {
+  margin: 24px auto 0 auto;
+  width: 126px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  border: 1px solid #ff9966;
+  border-radius: 6px;
+  color: #ff9966;
+  cursor: pointer;
+  outline: none;
+}
+
+.uploadFileButton_disabled {
+  color: grey;
+  border: 1px solid grey;
+  cursor: default;
+  opacity: 0.6;
+}
+
+.inputArea {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 40px 40px 0 40px;
+}
+
+.unSelectFileButton {
+  width: 14px;
+  height: 14px;
+  margin-left: 8px;
+  background-image: url("../../images/cross-svgrepo-com-grey.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: none;
+  background-color: transparent;
+}
+
+.unSelectFileButton:hover {
+  cursor: pointer;
+}
+
+.text {
+  display: block;
+  width: 100%;
+  padding: 0 40px;
+  box-sizing: border-box;
+  margin: 10px 0 0 0;
+  font-size: 14px;
+}
