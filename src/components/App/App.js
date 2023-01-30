@@ -1,28 +1,38 @@
+import { BrowserRouter as Router } from "react-router-dom";
 import "./App.css";
 import Header from "../Header/Header";
-import Modal from "../Modal/Modal";
 import Main from "../Main/Main";
-import AddCardModal from "../AddCardModal/AddCardModal";
-import FullSizeImg from "../FullSizeImg/FullSizeImg";
-import useFirestore from "../../hooks/useFirestore";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser } from "../../services/actions/App";
+import { SET_AUTH } from "../../services/actions/Auth";
 
 function App() {
-  const { modalVisible, modalImgVisible } = useSelector((state) => state.app);
+  const dispatch = useDispatch();
 
-  const { docs } = useFirestore("images");
+  const { auth } = useSelector((state) => state.auth);
+  const { currentUser } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (currentUser) {
+      dispatch({
+        type: SET_AUTH,
+        payload: true,
+      });
+    }
+  }, [currentUser, dispatch]);
+
+  useEffect(() => {
+    dispatch(getUser());
+  }, [auth, dispatch]);
 
   return (
-    <div style={{ padding: "0 30px 20px 30px" }}>
-      <Header />
-      <Main fotos={docs} />
-      <Modal modalVisible={modalVisible}>
-        <AddCardModal />
-      </Modal>
-      <Modal modalVisible={modalImgVisible}>
-        <FullSizeImg />
-      </Modal>
-    </div>
+    <Router>
+      <div style={{ padding: "0 30px 20px 30px" }}>
+        <Header />
+        <Main />
+      </div>
+    </Router>
   );
 }
 

@@ -1,27 +1,46 @@
 import React from "react";
 import HeaderStyles from "./Header.module.css";
-import { useDispatch } from "react-redux";
-import { SET_MODAL_VISIBLE } from "../../services/actions/App";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../services/actions/App";
 
 const Header = () => {
   const dispatch = useDispatch();
-  const openModal = () => {
-    dispatch({
-      type: SET_MODAL_VISIBLE,
-      payload: true,
-    });
+
+  const { currentUser, getUserRequest } = useSelector((state) => state.user);
+
+  const handleLogoutClick = () => {
+    dispatch(logout());
   };
 
   return (
     <header className={HeaderStyles.header}>
-      <h1 className={HeaderStyles.header__title}>Fire Gram</h1>
-      <div className={HeaderStyles.header__title_container}>
-        <h2 className={HeaderStyles.header__subtitle}>Твои фотографии</h2>
-        <p className={HeaderStyles.header__text}>
-          Нет никого, кто возлюбил бы, предпочел и возжаждал бы само страдание только за то, что это
-          страдание
-        </p>
-        <button className={HeaderStyles.header__button} onClick={openModal}></button>
+      <div className={HeaderStyles.header__container}>
+        <Link to="/" className={HeaderStyles.header__title}>
+          <h1>Fire Gram</h1>
+        </Link>
+        {getUserRequest ? (
+          <></>
+        ) : currentUser ? (
+          <div>
+            <span>{currentUser.email}</span>
+            <button onClick={handleLogoutClick} className={HeaderStyles.header__exit_button}>
+              Выйти
+            </button>
+          </div>
+        ) : (
+          <div>
+            <Link to="/login" className={HeaderStyles.header__container_auth}>
+              Войти
+            </Link>
+            <Link
+              to="/register"
+              className={`${HeaderStyles.header__container_auth} ${HeaderStyles.header__container_auth_reg}`}
+            >
+              Зарегестрироваться
+            </Link>
+          </div>
+        )}
       </div>
     </header>
   );
