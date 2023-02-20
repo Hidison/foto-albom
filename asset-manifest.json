@@ -1,21 +1,24 @@
 {
   "files": {
-    "main.css": "./static/css/main.884befff.css",
-    "main.js": "./static/js/main.c5f84f90.js",
+    "main.css": "./static/css/main.6de16fe7.css",
+    "main.js": "./static/js/main.55963d00.js",
     "static/js/787.aecba129.chunk.js": "./static/js/787.aecba129.chunk.js",
     "static/media/Bulgeria.ttf": "./static/media/Bulgeria.3f9ed9732bfdc3a9220a.ttf",
     "static/media/Share-Dong.ttf": "./static/media/Share-Dong.3ddfffc314e37a81f992.ttf",
     "static/media/cross-svgrepo-com-grey.svg": "./static/media/cross-svgrepo-com-grey.b6e47ccaad235e4c49c0.svg",
     "static/media/cross-svgrepo-com.svg": "./static/media/cross-svgrepo-com.9a05f9b67902a80b9cc5.svg",
+    "static/media/heart-svgrepo-com.svg": "./static/media/heart-svgrepo-com.025debb227556035c6aa.svg",
     "static/media/plus-svgrepo-com.svg": "./static/media/plus-svgrepo-com.d3b46c3f371076af8edb.svg",
+    "static/media/heart-svgrepo-com-active.svg": "./static/media/heart-svgrepo-com-active.213fecc54b4defe5ffe7.svg",
     "index.html": "./index.html",
+    "static/media/del-svg-black.svg": "./static/media/del-svg-black.2ebf8116669e626d75c7.svg",
     "static/media/del-card-icon.svg": "./static/media/del-card-icon.2f4e9b82f33163be591b.svg",
-    "main.884befff.css.map": "./static/css/main.884befff.css.map",
-    "main.c5f84f90.js.map": "./static/js/main.c5f84f90.js.map",
+    "main.6de16fe7.css.map": "./static/css/main.6de16fe7.css.map",
+    "main.55963d00.js.map": "./static/js/main.55963d00.js.map",
     "787.aecba129.chunk.js.map": "./static/js/787.aecba129.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.884befff.css",
-    "static/js/main.c5f84f90.js"
+    "static/css/main.6de16fe7.css",
+    "static/js/main.55963d00.js"
   ]
 }
