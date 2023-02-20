@@ -1,7 +1,7 @@
 import { SET_VALUES, SET_ERRORS, SET_VALID, SET_AUTH } from "../actions/Auth";
 
 const initalStateAuth = {
-  auth: false,
+  auth: null,
   values: {
     email: "",
     password: "",

@@ -7,7 +7,7 @@ import { logout } from "../../services/actions/App";
 const Header = () => {
   const dispatch = useDispatch();
 
-  const { currentUser, getUserRequest } = useSelector((state) => state.user);
+  const { user, getUserRequest } = useSelector((state) => state.user);
 
   const handleLogoutClick = () => {
     dispatch(logout());
@@ -19,11 +19,26 @@ const Header = () => {
         <Link to="/" className={HeaderStyles.header__title}>
           <h1>Fire Gram</h1>
         </Link>
+        {user && (
+          <Link to="/my-photos" className={HeaderStyles.header__container_auth}>
+            Мои картинки
+          </Link>
+        )}
+        {user && user.email === "admin@mail.ru" && (
+          <Link to="/moderators" className={HeaderStyles.header__container_auth}>
+            Модераторы
+          </Link>
+        )}
+        {user && (user.moderator || user.email === "admin@mail.ru") && (
+          <Link to="/photo-verification" className={HeaderStyles.header__container_auth}>
+            Модерация картинок
+          </Link>
+        )}
         {getUserRequest ? (
           <></>
-        ) : currentUser ? (
+        ) : user ? (
           <div>
-            <span>{currentUser.email}</span>
+            <span>{user.email}</span>
             <button onClick={handleLogoutClick} className={HeaderStyles.header__exit_button}>
               Выйти
             </button>

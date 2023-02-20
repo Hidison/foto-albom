@@ -7,6 +7,7 @@ import { register } from "../services/actions/Register";
 const RegisterPage = () => {
   const dispatch = useDispatch();
   const { values, auth } = useSelector((state) => state.auth);
+  const { registerRequest } = useSelector((state) => state.register);
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -18,7 +19,12 @@ const RegisterPage = () => {
   }
 
   return (
-    <Auth title={"Регистрация"} buttonTitle={"Зарегестрироваться"} handleClick={handleRegister} />
+    <Auth
+      title={"Регистрация"}
+      buttonTitle={"Зарегестрироваться"}
+      handleClick={handleRegister}
+      request={registerRequest}
+    />
   );
 };
 

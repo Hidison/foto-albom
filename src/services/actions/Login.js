@@ -4,7 +4,7 @@ export const LOGIN = "LOGIN";
 export const LOGIN_FAILED = "LOGIN_FAILED";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 
-function loginFailed(dispatch) {
+function loginFailed(dispatch, errorMessage) {
   dispatch({
     type: LOGIN_FAILED,
   });
@@ -13,7 +13,7 @@ function loginFailed(dispatch) {
     payload: {
       email: "",
       password: "",
-      submit: "Ошибка авторизации!",
+      submit: errorMessage,
     },
   });
 }
@@ -37,7 +37,17 @@ export const login = (email, password) => {
         }
       })
       .catch((error) => {
-        loginFailed(dispatch);
+        let errorMessage;
+        if (error.message.includes("wrong-password")) {
+          errorMessage = "Ошибка! Неправильный пароль.";
+        } else if (error.message.includes("user-not-found")) {
+          errorMessage = "Ошибка! Такой пользователь не зарегестрирован в системе.";
+        } else if (error.message.includes("too-many-requests")) {
+          errorMessage = "Ошибка! Слишком много неудачных попыток входа, повторите попытку позже.";
+        } else {
+          errorMessage = "Ошибка авторизации!";
+        }
+        loginFailed(dispatch, errorMessage);
       });
   };
 };

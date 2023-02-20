@@ -1,17 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import MainPageStyles from "./main.module.css";
-import useFirestore from "../hooks/useFirestore";
 import TablePhotos from "../components/TablePhotos/TablePhotos";
-import Modal from "../components/Modal/Modal";
-import AddCardModal from "../components/AddCardModal/AddCardModal";
-import FullSizeImg from "../components/FullSizeImg/FullSizeImg";
 import { useDispatch, useSelector } from "react-redux";
 import { SET_MODAL_VISIBLE } from "../services/actions/App";
+import Loader from "../components/Loader/Loader";
+import { SET_IMAGE_SUCCESS } from "../services/actions/AddCardModal";
+import Pagination from "../components/Pagination/Pagination";
+import { getPageCount, getPhotosOnPage } from "../utils/utils";
 
-const MainPage = () => {
+const MainPage = ({ photos }) => {
   const dispatch = useDispatch();
+  const { getPhotosRequest, getPhotosFailed } = useSelector((state) => state.getPhotos);
+  const { addImageToBaseSuccess } = useSelector((state) => state.addImageToBase);
+  const { pageNumber } = useSelector((state) => state.Pagination);
 
-  const { modalVisible, modalImgVisible } = useSelector((state) => state.app);
+  const photosOnPage = getPhotosOnPage(photos, pageNumber);
+  const totalPages = getPageCount(photos.length, 8);
 
   const openModal = () => {
     dispatch({
@@ -20,7 +24,16 @@ const MainPage = () => {
     });
   };
 
-  const { docs } = useFirestore("images");
+  useEffect(() => {
+    if (addImageToBaseSuccess) {
+      setTimeout(() => {
+        dispatch({
+          type: SET_IMAGE_SUCCESS,
+          payload: false,
+        });
+      }, 3000);
+    }
+  }, [addImageToBaseSuccess, dispatch]);
 
   return (
     <>
@@ -31,16 +44,27 @@ const MainPage = () => {
           страдание
         </p>
         <button className={MainPageStyles.header__button} onClick={openModal}></button>
+        {addImageToBaseSuccess && (
+          <span className={MainPageStyles.success_notice_text}>
+            Успешно! Фотография отправлена на модерацию.
+          </span>
+        )}
       </div>
       <div className={MainPageStyles.table}>
-        {docs && docs.map((cards, index) => <TablePhotos cards={cards} key={cards.id} />)}
+        {photosOnPage &&
+          photosOnPage.map((cards, index) => <TablePhotos cards={cards} key={cards.id} />)}
       </div>
-      <Modal modalVisible={modalVisible}>
-        <AddCardModal />
-      </Modal>
-      <Modal modalVisible={modalImgVisible}>
-        <FullSizeImg />
-      </Modal>
+      {getPhotosFailed && (
+        <div className={MainPageStyles.loader_container}>
+          <p className={MainPageStyles.error_text}>Произошла ошибка при получении данных</p>
+        </div>
+      )}
+      {getPhotosRequest && (
+        <div className={MainPageStyles.loader_container}>
+          <Loader width={50} height={50} fullPage={false} />
+        </div>
+      )}
+      {photos.length > 8 && <Pagination totalPage={totalPages} />}
     </>
   );
 };

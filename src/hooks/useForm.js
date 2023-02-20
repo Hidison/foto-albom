@@ -82,9 +82,9 @@ export function useForm() {
 
   const resetForm = useCallback(
     (
-      newValues = { name: "", email: "", password: "", code: "" },
-      newErrors = { name: "", email: "", password: "", submit: "" },
-      newIsValid = { name: false, email: false, password: false }
+      newValues = { email: "", password: "" },
+      newErrors = { email: "", password: "", submit: "" },
+      newIsValid = { email: false, password: false }
     ) => {
       dispatch({
         type: SET_ERRORS,

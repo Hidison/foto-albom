@@ -9,6 +9,9 @@ import {
   LOGOUT,
   LOGOUT_FAILED,
   LOGOUT_SUCCESS,
+  GET_PHOTOS,
+  GET_PHOTOS_FAILED,
+  GET_PHOTOS_SUCCESS,
 } from "../actions/App";
 
 const initalStateApp = {
@@ -21,12 +24,19 @@ const initalStateApp = {
 const initalStateGetUser = {
   getUserRequest: false,
   getUserFailed: false,
-  currentUser: null,
+  user: null,
 };
 
 const initalStateLogout = {
   logoutRequest: false,
   logoutFailed: false,
+};
+
+const initialStateGetPhotos = {
+  getPhotosRequest: false,
+  getPhotosFailed: false,
+  photos: [],
+  errorMessage: "",
 };
 
 export const AppReducer = (state = initalStateApp, action) => {
@@ -74,7 +84,7 @@ export const getUserReducer = (state = initalStateGetUser, action) => {
       return {
         ...state,
         getUserRequest: false,
-        currentUser: action.payload,
+        user: action.payload,
       };
     }
     case GET_USER_FAILED: {
@@ -110,6 +120,37 @@ export const logoutReducer = (state = initalStateLogout, action) => {
         ...state,
         logoutFailed: true,
         logoutRequest: false,
+      };
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
+export const getPhotosReducer = (state = initialStateGetPhotos, action) => {
+  switch (action.type) {
+    case GET_PHOTOS: {
+      return {
+        ...state,
+        getPhotosRequest: true,
+        getPhotosFailed: false,
+      };
+    }
+    case GET_PHOTOS_SUCCESS: {
+      return {
+        ...state,
+        getPhotosRequest: false,
+        photos: action.payload,
+        lastVisible: action.lastVisible,
+      };
+    }
+    case GET_PHOTOS_FAILED: {
+      return {
+        ...state,
+        getPhotosFailed: true,
+        getPhotosRequest: false,
+        errorMessage: action.payload,
       };
     }
     default: {

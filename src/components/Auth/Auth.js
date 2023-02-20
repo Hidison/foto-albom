@@ -2,9 +2,13 @@ import React, { useEffect } from "react";
 import AuthStyles from "./Auth.module.css";
 import { useSelector } from "react-redux";
 import { useForm } from "../../hooks/useForm";
+import { useLocation } from "react-router-dom";
+import Loader from "../Loader/Loader";
 
-const Auth = ({ title, buttonTitle, handleClick }) => {
+const Auth = ({ title, buttonTitle, handleClick, request }) => {
   const { values, errors, valid } = useSelector((state) => state.auth);
+
+  const location = useLocation();
 
   const { handleChange, resetForm } = useForm();
 
@@ -30,26 +34,40 @@ const Auth = ({ title, buttonTitle, handleClick }) => {
             <span className={AuthStyles.error_text}>{errors.email}</span>
           )}
         </div>
-        <div className={AuthStyles.input_container}>
-          <input
-            type="password"
-            name="password"
-            placeholder={"Введите пароль"}
-            onChange={handleChange}
-            value={values.password || ""}
-            className={AuthStyles.input_text}
-          />
-          {values.password.length !== 0 && (
-            <span className={AuthStyles.error_text}>{errors.password}</span>
-          )}
-        </div>
+        {location.pathname !== "/moderators" && (
+          <div className={AuthStyles.input_container}>
+            <input
+              type="password"
+              name="password"
+              placeholder={"Введите пароль"}
+              onChange={handleChange}
+              value={values.password || ""}
+              className={AuthStyles.input_text}
+            />
+            {values.password.length !== 0 && (
+              <span className={AuthStyles.error_text}>{errors.password}</span>
+            )}
+          </div>
+        )}
         <div className={AuthStyles.input_container}>
           <input
             type="submit"
-            disabled={!valid.email || !valid.password ? true : false}
+            disabled={
+              location.pathname !== "/moderators"
+                ? !valid.email || !valid.password
+                  ? true
+                  : false
+                : !valid.email
+                ? true
+                : false
+            }
             value={buttonTitle}
             className={
-              !valid.email || !valid.password
+              location.pathname !== "/moderators"
+                ? !valid.email || !valid.password
+                  ? `${AuthStyles.input_submit} ${AuthStyles.input_submit_disabled}`
+                  : `${AuthStyles.input_submit}`
+                : !valid.email
                 ? `${AuthStyles.input_submit} ${AuthStyles.input_submit_disabled}`
                 : `${AuthStyles.input_submit}`
             }
@@ -59,6 +77,11 @@ const Auth = ({ title, buttonTitle, handleClick }) => {
           </span>
         </div>
       </form>
+      {request && (
+        <div className={AuthStyles.loader_container}>
+          <Loader width={30} height={30} fullPage={false} />
+        </div>
+      )}
     </div>
   );
 };

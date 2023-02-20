@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { appStorage } from "../firebase";
-import { addImageToBase } from "../utils/utils";
+import { useDispatch, useSelector } from "react-redux";
+import { addImageToBase } from "../services/actions/AddCardModal";
 
 const useStorage = (file) => {
+  const dispatch = useDispatch();
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState(null);
   const [url, setUrl] = useState(null);
+  const { user } = useSelector((state) => state.user);
 
   useEffect(() => {
     const storageRef = appStorage.ref(file.name);
@@ -22,7 +25,7 @@ const useStorage = (file) => {
       async () => {
         const url = await storageRef.getDownloadURL();
         setUrl(url);
-        addImageToBase(url);
+        dispatch(addImageToBase(url, user.id, user.email));
       }
     );
 

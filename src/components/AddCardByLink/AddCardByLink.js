@@ -1,17 +1,18 @@
 import React, { useEffect } from "react";
 import AddCardByLinkStyles from "./AddCardByLink.module.css";
-import { addImageToBase } from "../../utils/utils";
 import { closeModal } from "../../services/actions/App";
 import { useDispatch, useSelector } from "react-redux";
 import {
   SET_ADD_CARD_BY_LINK_ERROR,
   SET_ADD_CARD_BY_LINK_VALUE,
 } from "../../services/actions/AddCardByLink";
+import { addImageToBase } from "../../services/actions/AddCardModal";
 
 const AddCardByLink = () => {
   const dispatch = useDispatch();
 
   const { value, error } = useSelector((state) => state.addCardByLink);
+  const { user } = useSelector((state) => state.user);
 
   const isImageLink = /^(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|jpeg|png)/;
 
@@ -38,7 +39,7 @@ const AddCardByLink = () => {
 
   const addFoto = (e) => {
     e.preventDefault();
-    addImageToBase(value);
+    dispatch(addImageToBase(value, user.id, user.email));
     dispatch(closeModal());
     dispatch({
       type: SET_ADD_CARD_BY_LINK_VALUE,

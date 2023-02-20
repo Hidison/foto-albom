@@ -1,33 +1,49 @@
 import { BrowserRouter as Router } from "react-router-dom";
-import "./App.css";
+import AppStyles from "./App.module.css";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../services/actions/App";
 import { SET_AUTH } from "../../services/actions/Auth";
+import Loader from "../Loader/Loader";
 
 function App() {
   const dispatch = useDispatch();
 
-  const { auth } = useSelector((state) => state.auth);
-  const { currentUser } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.user);
+  const { delImageRequest } = useSelector((state) => state.delImage);
+  const { likeImageRequest } = useSelector((state) => state.likeImage);
+  const { disLikeImageRequest } = useSelector((state) => state.disLikeImage);
+  const { logoutRequest } = useSelector((state) => state.logout);
+  const { verifyImageRequest } = useSelector((state) => state.verifyImage);
+  const { unModerateUserRequest } = useSelector((state) => state.unModerateUser);
 
   useEffect(() => {
-    if (currentUser) {
+    dispatch(getUser());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (user) {
       dispatch({
         type: SET_AUTH,
         payload: true,
       });
     }
-  }, [currentUser, dispatch]);
-
-  useEffect(() => {
-    dispatch(getUser());
-  }, [auth, dispatch]);
+  }, [user, dispatch]);
 
   return (
     <Router>
+      {(delImageRequest ||
+        likeImageRequest ||
+        disLikeImageRequest ||
+        logoutRequest ||
+        unModerateUserRequest ||
+        verifyImageRequest) && (
+        <div className={AppStyles.loader__full_container}>
+          <Loader width={60} height={60} fullPage={true} />
+        </div>
+      )}
       <div style={{ padding: "0 30px 20px 30px" }}>
         <Header />
         <Main />

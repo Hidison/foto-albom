@@ -1,0 +1,21 @@
+.buttons_container {
+  display: flex;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+.buttons {
+  cursor: pointer;
+  margin-left: 2px;
+  border: 1px solid black;
+  border-radius: 4px;
+  width: 30px;
+  height: 30px;
+  background: transparent;
+  font-size: 18px;
+}
+
+.buttons_disabled {
+  cursor: default;
+  border: 1px solid gray;
+}
