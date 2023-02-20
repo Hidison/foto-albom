@@ -1,6 +1,7 @@
 .table {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(262px, 1fr));
+  grid-template-rows: 1fr 1fr;
   gap: 10px;
   margin: 44px auto 0 auto;
   max-width: 1200px;
@@ -12,6 +13,7 @@
   margin: 0 auto;
   align-items: center;
   max-width: 500px;
+  position: relative;
 }
 
 .header__subtitle {
@@ -43,3 +45,25 @@
   transition: all 0.4s;
 }
 
+.loader_container {
+  display: flex;
+  justify-content: center;
+  margin-top: 44px;
+}
+
+.error_text {
+  color: red;
+}
+
+.success_notice_text {
+  position: absolute;
+  bottom: -28px;
+  color: rgb(31, 152, 31);
+}
+
+.button__load_more {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px auto;
+}

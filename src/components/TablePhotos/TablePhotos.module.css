@@ -1,6 +1,8 @@
 .picture {
   background-size: cover;
   background-repeat: no-repeat;
+  background-position-x: center;
+  background-position-y: center;
   height: 262px;
 }
 
@@ -23,4 +25,93 @@
   cursor: pointer;
   opacity: 0.6;
   transition: all 0.4s;
+}
+
+.verifyButton {
+  border-radius: 0px;
+  outline: none;
+  width: 50%;
+  height: 32px;
+  background: white;
+  opacity: 0.9;
+  border: 1px solid black;
+}
+
+.verifyButton:hover {
+  cursor: pointer;
+}
+
+.buttonContainer {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+
+.likes_container {
+  position: absolute;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  bottom: 12px;
+  right: 12px;
+  min-width: 70px;
+}
+
+.likes {
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.likesButton {
+  width: 30px;
+  height: 30px;
+  background-image: url("../../images/heart-svgrepo-com.svg");
+  background-color: transparent;
+  background-size: contain;
+  background-repeat: no-repeat;
+  outline: none;
+  border: none;
+}
+
+.likesButton_active {
+  background-image: url("../../images/heart-svgrepo-com-active.svg");
+}
+
+.likesButton:hover {
+  cursor: pointer;
+}
+
+.cards_auth_button {
+  display: none;
+}
+
+.cards_auth_button_active {
+  position: absolute;
+  right: 76px;
+  background: white;
+  bottom: 13px;
+  min-width: 152px;
+  font-size: 12px;
+  height: 26px;
+  display: flex;
+  border-radius: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.owner_title {
+  max-width: 200px;
+  height: 24px;
+  border-radius: 6px;
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  opacity: 0.9;
+  background: white;
+  font-size: 12px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 8px;
+  box-sizing: border-box;
 }

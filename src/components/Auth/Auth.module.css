@@ -74,3 +74,9 @@
 .input_container {
   position: relative;
 }
+
+.loader_container {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}

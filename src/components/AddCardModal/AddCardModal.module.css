@@ -113,3 +113,23 @@
   margin: 10px 0 0 0;
   font-size: 14px;
 }
+
+.attention__container {
+  width: 100%;
+  min-width: 520px;
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+.attention__auth_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 26px;
+}
+
+.attention__link_text {
+  text-decoration: none;
+  margin-left: 6px;
+  margin-right: 6px;
+}

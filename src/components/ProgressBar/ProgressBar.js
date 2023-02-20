@@ -45,7 +45,7 @@ const ProgressBar = () => {
               : `${ProgressBarStyles.percent} ${ProgressBarStyles.percent_begin}`
           }
         >
-          <Loader />
+          <Loader width={8} height={8} fullPage={false} />
           {Math.floor(progress)}%
         </span>
       </div>

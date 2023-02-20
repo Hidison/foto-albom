@@ -1,0 +1,24 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.error_text {
+  color: red;
+}
+
+.loader__container {
+  display: flex;
+  justify-content: center;
+}
