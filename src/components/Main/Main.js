@@ -1,5 +1,5 @@
-import React, { useMemo } from "react";
-import { Switch, Route } from "react-router-dom";
+import React, { useEffect, useMemo } from "react";
+import { Switch, Route, useLocation, useHistory } from "react-router-dom";
 import MainStyles from "./Main.module.css";
 import MainPage from "../../pages/main";
 import LoginPage from "../../pages/login";
@@ -22,6 +22,11 @@ const Main = () => {
   const { modalVisible, modalImgVisible } = useSelector((state) => state.app);
   const { photos } = useSelector((state) => state.getPhotos);
 
+  const location = useLocation();
+  const history = useHistory();
+
+  console.log(location.pathname);
+
   const q = query(
     collection(appFirestore, "images"),
     where("verificated", ">", 1),
@@ -35,25 +40,31 @@ const Main = () => {
     [photos, user]
   );
 
+  useEffect(() => {
+    if (location.pathname === "/") {
+      history.push("/foto-albom");
+    }
+  }, [history, location.pathname]);
+
   return (
     <main className={MainStyles.table}>
       <Switch>
-        <Route path="/" exact={true}>
+        <Route path="/foto-albom" exact={true}>
           <MainPage photos={photos} />
         </Route>
-        <ProtectedRoute path="/moderators" exact={true}>
+        <ProtectedRoute path="/foto-albom/moderators" exact={true}>
           <ModeratorsPage />
         </ProtectedRoute>
-        <ProtectedRoute path="/photo-verification" exact={true}>
+        <ProtectedRoute path="/foto-albom/photo-verification" exact={true}>
           <PhotoVerificationPage />
         </ProtectedRoute>
-        <Route path="/login" exact={true}>
+        <Route path="/foto-albom/login" exact={true}>
           {!getUserRequest && <LoginPage />}
         </Route>
-        <Route path="/register" exact={true}>
+        <Route path="/foto-albom/register" exact={true}>
           {!getUserRequest && <RegisterPage />}
         </Route>
-        <ProtectedRoute path="/my-photos" exact={true}>
+        <ProtectedRoute path="/foto-albom/my-photos" exact={true}>
           <MyPhotosPage photos={myFotos} />
         </ProtectedRoute>
       </Switch>

@@ -27,7 +27,7 @@ const TablePhotos = ({ cards }) => {
     } else if (auth && !cards.likes.includes(user.id)) {
       dispatch(likeImage(cards.id, user.id));
     } else if (!auth) {
-      history.push("/login");
+      history.push("/foto-albom/login");
     } else return;
   };
 

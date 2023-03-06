@@ -51,7 +51,7 @@ const PhotoVerificationPage = () => {
   } else {
     return <Redirect
       to={{
-        pathname: "/",
+        pathname: "/foto-albom",
       }}
     />;
   }

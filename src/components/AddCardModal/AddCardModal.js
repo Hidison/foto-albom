@@ -112,7 +112,7 @@ const AddCardModal = () => {
           <span>Чтобы добавлять картинки необходимо авторизоваться!</span>
           <div className={AddCardModalStyles.attention__auth_container}>
             <Link
-              to="/login"
+              to="/foto-albom/login"
               onClick={handleCloseModal}
               className={AddCardModalStyles.attention__link_text}
             >
@@ -120,7 +120,7 @@ const AddCardModal = () => {
             </Link>
             или
             <Link
-              to="/register"
+              to="/foto-albom/register"
               onClick={handleCloseModal}
               className={AddCardModalStyles.attention__link_text}
             >

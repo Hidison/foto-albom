@@ -88,7 +88,7 @@ const ModeratorsPage = () => {
   } else {
     return <Redirect
       to={{
-        pathname: "/",
+        pathname: "/foto-albom",
       }}
     />;
   }

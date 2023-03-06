@@ -16,21 +16,21 @@ const Header = () => {
   return (
     <header className={HeaderStyles.header}>
       <div className={HeaderStyles.header__container}>
-        <Link to="/" className={HeaderStyles.header__title}>
+        <Link to="/foto-albom" className={HeaderStyles.header__title}>
           <h1>Fire Gram</h1>
         </Link>
         {user && (
-          <Link to="/my-photos" className={HeaderStyles.header__container_auth}>
+          <Link to="/foto-albom/my-photos" className={HeaderStyles.header__container_auth}>
             Мои картинки
           </Link>
         )}
         {user && user.email === "admin@mail.ru" && (
-          <Link to="/moderators" className={HeaderStyles.header__container_auth}>
+          <Link to="/foto-albom/moderators" className={HeaderStyles.header__container_auth}>
             Модераторы
           </Link>
         )}
         {user && (user.moderator || user.email === "admin@mail.ru") && (
-          <Link to="/photo-verification" className={HeaderStyles.header__container_auth}>
+          <Link to="/foto-albom/photo-verification" className={HeaderStyles.header__container_auth}>
             Модерация картинок
           </Link>
         )}
@@ -45,11 +45,11 @@ const Header = () => {
           </div>
         ) : (
           <div>
-            <Link to="/login" className={HeaderStyles.header__container_auth}>
+            <Link to="/foto-albom/login" className={HeaderStyles.header__container_auth}>
               Войти
             </Link>
             <Link
-              to="/register"
+              to="/foto-albom/register"
               className={`${HeaderStyles.header__container_auth} ${HeaderStyles.header__container_auth_reg}`}
             >
               Зарегестрироваться
