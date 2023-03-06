@@ -24,7 +24,7 @@ const ProtectedRoute = ({ children, ...rest }) => {
         ) : (
           <Redirect
             to={{
-              pathname: "/foto-albom",
+              pathname: "/",
               state: { from: location },
             }}
           />

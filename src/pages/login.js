@@ -23,7 +23,7 @@ const LoginPage = () => {
   };
 
   if (auth) {
-    return <Redirect to={"/foto-albom"} />;
+    return <Redirect to={"/"} />;
   }
 
   return (

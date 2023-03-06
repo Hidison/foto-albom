@@ -42,29 +42,29 @@ const Main = () => {
 
   useEffect(() => {
     if (location.pathname === "/") {
-      history.push("/foto-albom");
+      history.push("/");
     }
   }, [history, location.pathname]);
 
   return (
     <main className={MainStyles.table}>
       <Switch>
-        <Route path="/foto-albom" exact={true}>
+        <Route path="/" exact={true}>
           <MainPage photos={photos} />
         </Route>
-        <ProtectedRoute path="/foto-albom/moderators" exact={true}>
+        <ProtectedRoute path="/moderators" exact={true}>
           <ModeratorsPage />
         </ProtectedRoute>
-        <ProtectedRoute path="/foto-albom/photo-verification" exact={true}>
+        <ProtectedRoute path="/photo-verification" exact={true}>
           <PhotoVerificationPage />
         </ProtectedRoute>
-        <Route path="/foto-albom/login" exact={true}>
+        <Route path="/login" exact={true}>
           {!getUserRequest && <LoginPage />}
         </Route>
-        <Route path="/foto-albom/register" exact={true}>
+        <Route path="/register" exact={true}>
           {!getUserRequest && <RegisterPage />}
         </Route>
-        <ProtectedRoute path="/foto-albom/my-photos" exact={true}>
+        <ProtectedRoute path="/my-photos" exact={true}>
           <MyPhotosPage photos={myFotos} />
         </ProtectedRoute>
       </Switch>
