@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo } from "react";
-import { Switch, Route, useLocation, useHistory } from "react-router-dom";
+import React, { useMemo } from "react";
+import { Switch, Route } from "react-router-dom";
 import MainStyles from "./Main.module.css";
 import MainPage from "../../pages/main";
 import LoginPage from "../../pages/login";
@@ -22,11 +22,6 @@ const Main = () => {
   const { modalVisible, modalImgVisible } = useSelector((state) => state.app);
   const { photos } = useSelector((state) => state.getPhotos);
 
-  const location = useLocation();
-  const history = useHistory();
-
-  console.log(location.pathname);
-
   const q = query(
     collection(appFirestore, "images"),
     where("verificated", ">", 1),
@@ -39,12 +34,6 @@ const Main = () => {
     () => user && photos && photos.filter((foto) => foto.owner === user.id),
     [photos, user]
   );
-
-  useEffect(() => {
-    if (location.pathname === "/") {
-      history.push("/");
-    }
-  }, [history, location.pathname]);
 
   return (
     <main className={MainStyles.table}>
