@@ -1,13 +1,13 @@
 import React from "react";
 import ModeratedUserStyles from "./ModeratedUser.module.css";
 import { useDispatch } from "react-redux";
-import { unModerateUser } from "../../services/actions/ModeratedUser";
+import { unModerateUserAction } from "../../services/actions/ModeratedUser";
 
 const ModeratedUser = ({ user }) => {
   const dispatch = useDispatch();
 
   const handleUnModerateUserButtonClick = () => {
-    dispatch(unModerateUser(user.email));
+    dispatch(unModerateUserAction(user.email));
   };
 
   return (

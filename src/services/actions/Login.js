@@ -1,39 +1,29 @@
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { SET_ERRORS } from "./Auth";
-export const LOGIN = "LOGIN";
-export const LOGIN_FAILED = "LOGIN_FAILED";
-export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+import { login, loginFailed, loginSuccess } from "../Login";
+import { setErrors } from "../Auth";
 
-function loginFailed(dispatch, errorMessage) {
-  dispatch({
-    type: LOGIN_FAILED,
-  });
-  dispatch({
-    type: SET_ERRORS,
-    payload: {
+function loginFailedAction(dispatch, errorMessage) {
+  dispatch(loginFailed());
+  dispatch(
+    setErrors({
       email: "",
       password: "",
       submit: errorMessage,
-    },
-  });
+    })
+  );
 }
 
-export const login = (email, password) => {
+export const loginAction = (email, password) => {
   return function (dispatch) {
-    dispatch({
-      type: LOGIN,
-    });
+    dispatch(login());
     const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
         if (user && user.accessToken) {
-          dispatch({
-            type: LOGIN_SUCCESS,
-            payload: user,
-          });
+          dispatch(loginSuccess());
         } else {
-          loginFailed(dispatch);
+          loginFailedAction(dispatch);
         }
       })
       .catch((error) => {
@@ -47,7 +37,7 @@ export const login = (email, password) => {
         } else {
           errorMessage = "Ошибка авторизации!";
         }
-        loginFailed(dispatch, errorMessage);
+        loginFailedAction(dispatch, errorMessage);
       });
   };
 };

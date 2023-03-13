@@ -1,20 +1,18 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import AddCardModalStyles from "./AddCardModal.module.css";
 import AddCardByLink from "../AddCardByLink/AddCardByLink";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  SET_FILE,
-  SET_FILE_UPLOAD_ERROR,
-  SET_IS_UPLOAD_FILE,
-} from "../../services/actions/AddCardModal";
 import { closeModal } from "../../services/actions/App";
+import { setFileUploadError, setIsUploadFile } from "../../services/AddCardModal";
 
 const AddCardModal = () => {
   const dispatch = useDispatch();
-  const { file, fileUploadError, isUploadFile } = useSelector((state) => state.addCardModal);
+  const { fileUploadError, isUploadFile } = useSelector((state) => state.addCardModal);
   const { auth } = useSelector((state) => state.auth);
+  const [file, setFile] = useState(null);
+
   const handleCloseModal = () => {
     dispatch(closeModal());
   };
@@ -26,42 +24,24 @@ const AddCardModal = () => {
   const changeFileHandler = (e) => {
     let selectedFile = e.target.files[0];
     if (selectedFile && fileTypes.includes(selectedFile.type)) {
-      dispatch({
-        type: SET_FILE,
-        payload: selectedFile,
-      });
-      dispatch({
-        type: SET_FILE_UPLOAD_ERROR,
-        payload: "",
-      });
+      setFile(selectedFile);
+      dispatch(setFileUploadError(""));
     } else {
-      dispatch({
-        type: SET_FILE,
-        payload: null,
-      });
-      dispatch({
-        type: SET_FILE_UPLOAD_ERROR,
-        payload: 'Можно загружать файлы только в формате "png" и "jpeg"',
-      });
+      setFile(null);
+      dispatch(setFileUploadError('Можно загружать файлы только в формате "png" и "jpeg"'));
     }
   };
 
   const uploadFile = (e) => {
     e.preventDefault();
-    dispatch({
-      type: SET_IS_UPLOAD_FILE,
-      payload: true,
-    });
+    dispatch(setIsUploadFile(true));
     inputRef.current.value = "";
   };
 
   const unSelectFile = (e) => {
     e.preventDefault();
     inputRef.current.value = "";
-    dispatch({
-      type: SET_FILE,
-      payload: null,
-    });
+    setFile(null);
   };
 
   return (
@@ -102,7 +82,7 @@ const AddCardModal = () => {
             >
               Загрузить
             </button>
-            {file && isUploadFile && <ProgressBar />}
+            {file && isUploadFile && <ProgressBar file={file} setFile={setFile} />}
           </form>
           <p className={AddCardModalStyles.text}>Или</p>
           <AddCardByLink />

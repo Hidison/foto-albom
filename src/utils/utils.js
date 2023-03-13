@@ -7,15 +7,16 @@ import {
   setDoc,
   collection,
   addDoc,
+  Timestamp,
 } from "firebase/firestore";
-import { appFirestore, timestamp } from "../firebase";
+import { appFirestore } from "../firebase";
 
 export const delImageApi = async (id) => {
   await deleteDoc(doc(appFirestore, "images", `${id}`));
 };
 
 export const addImageToBaseApi = async (url, id, email) => {
-  const createdAt = timestamp();
+  const createdAt = new Date(Timestamp.now().seconds * 1000).toUTCString();
   await addDoc(collection(appFirestore, "images"), {
     url: url,
     createdAt: createdAt,
@@ -27,7 +28,7 @@ export const addImageToBaseApi = async (url, id, email) => {
 };
 
 export const addUserToBaseApi = async (email, id) => {
-  const createdAt = timestamp();
+  const createdAt = new Date(Timestamp.now().seconds * 1000).toUTCString();
   await setDoc(doc(appFirestore, "users", `${email}`), {
     moderator: false,
     createdAt: createdAt,

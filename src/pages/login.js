@@ -2,8 +2,8 @@ import React from "react";
 import Auth from "../components/Auth/Auth";
 import { Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../services/actions/Login";
-import { SET_ERRORS } from "../services/actions/Auth";
+import { loginAction } from "../services/actions/Login";
+import { setErrors } from "../services/Auth";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -13,13 +13,12 @@ const LoginPage = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    dispatch({
-      type: SET_ERRORS,
-      payload: {
+    dispatch(
+      setErrors({
         submit: "",
-      },
-    });
-    dispatch(login(values.email, values.password));
+      })
+    );
+    dispatch(loginAction(values.email, values.password));
   };
 
   if (auth) {

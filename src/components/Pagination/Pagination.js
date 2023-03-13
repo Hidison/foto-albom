@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { getTotalPages } from "../../utils/utils";
 import PaginationStyles from "./Pagination.module.css";
-import { SET_PAGE_NUMBER } from "../../services/actions/Pagination";
 import { useDispatch } from "react-redux";
+import { setPageNumber } from "../../services/Pagination";
 
 const Pagination = ({ totalPage }) => {
   const dispatch = useDispatch();
@@ -10,10 +10,7 @@ const Pagination = ({ totalPage }) => {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    dispatch({
-      type: SET_PAGE_NUMBER,
-      payload: page,
-    });
+    dispatch(setPageNumber(page));
   }, [dispatch, page]);
 
   return (

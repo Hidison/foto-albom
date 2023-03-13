@@ -1,35 +1,25 @@
 import { unModerateUserApi } from "../../utils/utils";
-import { SET_ERRORS } from "./Auth";
+import { setErrors } from "../Auth";
+import { unModerateUser, unModerateUserFailed, unModerateUserSuccess } from "../ModeratedUser";
 
-export const UN_MODERATE_USER = "UN_MODERATE_USER";
-export const UN_MODERATE_USER_FAILED = "UN_MODERATE_USER_FAILED";
-export const UN_MODERATE_USER_SUCCESS = "UN_MODERATE_USER_SUCCESS";
-
-function unModerateUserFailed(dispatch) {
-  dispatch({
-    type: UN_MODERATE_USER_FAILED,
-  });
-  dispatch({
-    type: SET_ERRORS,
-    payload: {
+function unModerateUserFailedAction(dispatch) {
+  dispatch(unModerateUserFailed());
+  dispatch(
+    setErrors({
       submit: "Ошибка удаления модератора!",
-    },
-  });
+    })
+  );
 }
 
-export const unModerateUser = (email) => {
+export const unModerateUserAction = (email) => {
   return function (dispatch) {
-    dispatch({
-      type: UN_MODERATE_USER,
-    });
+    dispatch(unModerateUser());
     unModerateUserApi(email)
       .then(() => {
-        dispatch({
-          type: UN_MODERATE_USER_SUCCESS,
-        });
+        dispatch(unModerateUserSuccess());
       })
       .catch((error) => {
-        unModerateUserFailed(dispatch);
+        unModerateUserFailedAction(dispatch);
       });
   };
 };

@@ -2,11 +2,8 @@ import React, { useEffect } from "react";
 import AddCardByLinkStyles from "./AddCardByLink.module.css";
 import { closeModal } from "../../services/actions/App";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  SET_ADD_CARD_BY_LINK_ERROR,
-  SET_ADD_CARD_BY_LINK_VALUE,
-} from "../../services/actions/AddCardByLink";
 import { addImageToBase } from "../../services/actions/AddCardModal";
+import { addCardByLinkError, addCardByLinkValue } from "../../services/AddCardByLink";
 
 const AddCardByLink = () => {
   const dispatch = useDispatch();
@@ -18,33 +15,20 @@ const AddCardByLink = () => {
 
   useEffect(() => {
     if (!isImageLink.test(value) && value.length !== 0) {
-      dispatch({
-        type: SET_ADD_CARD_BY_LINK_ERROR,
-        payload: "Введите ссылку на фотографию в формате .jpeg или .png",
-      });
-    } else
-      dispatch({
-        type: SET_ADD_CARD_BY_LINK_ERROR,
-        payload: "",
-      });
+      dispatch(addCardByLinkError("Введите ссылку на фотографию в формате .jpeg или .png"));
+    } else dispatch(addCardByLinkError(""));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
   const changeValue = (e) => {
-    dispatch({
-      type: SET_ADD_CARD_BY_LINK_VALUE,
-      payload: e.target.value,
-    });
+    dispatch(addCardByLinkValue(e.target.value));
   };
 
   const addFoto = (e) => {
     e.preventDefault();
     dispatch(addImageToBase(value, user.id, user.email));
     dispatch(closeModal());
-    dispatch({
-      type: SET_ADD_CARD_BY_LINK_VALUE,
-      payload: "",
-    });
+    dispatch(addCardByLinkValue(""));
   };
 
   return (

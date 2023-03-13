@@ -1,134 +1,104 @@
 import { delImageApi, disLikeImageApi, likeImageApi, verifyImageApi } from "../../utils/utils";
-import { SET_ERRORS } from "./Auth";
+import { setErrors } from "../Auth";
+import {
+  delImage,
+  delImageFailed,
+  delImageSuccess,
+  disLikeImage,
+  disLikeImageFailed,
+  disLikeImageSuccess,
+  likeImage,
+  likeImageFailed,
+  likeImageSuccess,
+  verifyImage,
+  verifyImageFailed,
+  verifyImageSuccess,
+} from "../TablePhotos";
 
-export const DEL_IMAGE = "DEL_IMAGE";
-export const DEL_IMAGE_FAILED = "DEL_IMAGE_FAILED";
-export const DEL_IMAGE_SUCCESS = "DEL_IMAGE_SUCCESS";
-
-export const LIKE_IMAGE = "LIKE_IMAGE";
-export const LIKE_IMAGE_FAILED = "LIKE_IMAGE_FAILED";
-export const LIKE_IMAGE_SUCCESS = "LIKE_IMAGE_SUCCESS";
-
-export const DIS_LIKE_IMAGE = "DIS_LIKE_IMAGE";
-export const DIS_LIKE_IMAGE_FAILED = "DIS_LIKE_IMAGE_FAILED";
-export const DIS_LIKE_IMAGE_SUCCESS = "DIS_LIKE_IMAGE_SUCCESS";
-
-export const VERIFY_IMAGE = "VERIFY_IMAGE";
-export const VERIFY_IMAGE_FAILED = "VERIFY_IMAGE_FAILED";
-export const VERIFY_IMAGE_SUCCESS = "VERIFY_IMAGE_SUCCESS";
-
-function delImageFailed(dispatch) {
-  dispatch({
-    type: DEL_IMAGE_FAILED,
-  });
-  dispatch({
-    type: SET_ERRORS,
-    payload: {
+function delImageFailedAction(dispatch) {
+  dispatch(delImageFailed());
+  dispatch(
+    setErrors({
       submit: "Ошибка удаления картинки",
-    },
-  });
+    })
+  );
 }
 
-function likeImageFailed(dispatch) {
-  dispatch({
-    type: LIKE_IMAGE_FAILED,
-  });
-  dispatch({
-    type: SET_ERRORS,
-    payload: {
+function likeImageFailedAction(dispatch) {
+  dispatch(likeImageFailed());
+  dispatch(
+    setErrors({
       submit: "Ошибка!",
-    },
-  });
+    })
+  );
 }
 
-function disLikeImageFailed(dispatch) {
-  dispatch({
-    type: DIS_LIKE_IMAGE_FAILED,
-  });
-  dispatch({
-    type: SET_ERRORS,
-    payload: {
+function disLikeImageFailedAction(dispatch) {
+  dispatch(disLikeImageFailed());
+  dispatch(
+    setErrors({
       submit: "Ошибка!",
-    },
-  });
+    })
+  );
 }
 
-function verifyImageFailed(dispatch) {
-  dispatch({
-    type: VERIFY_IMAGE_FAILED,
-  });
-  dispatch({
-    type: SET_ERRORS,
-    payload: {
+function verifyImageFailedAction(dispatch) {
+  dispatch(verifyImageFailed());
+  dispatch(
+    setErrors({
       submit: "Ошибка верификации картинки!",
-    },
-  });
+    })
+  );
 }
 
-export const delImage = (id) => {
+export const delImageAction = (id) => {
   return function (dispatch) {
-    dispatch({
-      type: DEL_IMAGE,
-    });
+    dispatch(delImage());
     delImageApi(id)
       .then(() => {
-        dispatch({
-          type: DEL_IMAGE_SUCCESS,
-        });
+        dispatch(delImageSuccess());
       })
       .catch((error) => {
-        delImageFailed(dispatch);
+        delImageFailedAction(dispatch);
       });
   };
 };
 
-export const likeImage = (id, owner) => {
+export const likeImageAction = (id, owner) => {
   return function (dispatch) {
-    dispatch({
-      type: LIKE_IMAGE,
-    });
+    dispatch(likeImage());
     likeImageApi(id, owner)
       .then(() => {
-        dispatch({
-          type: LIKE_IMAGE_SUCCESS,
-        });
+        dispatch(likeImageSuccess());
       })
       .catch((error) => {
-        likeImageFailed(dispatch);
+        likeImageFailedAction(dispatch);
       });
   };
 };
 
-export const disLikeImage = (id, owner) => {
+export const disLikeImageAction = (id, owner) => {
   return function (dispatch) {
-    dispatch({
-      type: DIS_LIKE_IMAGE,
-    });
+    dispatch(disLikeImage());
     disLikeImageApi(id, owner)
       .then(() => {
-        dispatch({
-          type: DIS_LIKE_IMAGE_SUCCESS,
-        });
+        dispatch(disLikeImageSuccess());
       })
       .catch((error) => {
-        disLikeImageFailed(dispatch);
+        disLikeImageFailedAction(dispatch);
       });
   };
 };
 
-export const verifyImage = (id) => {
+export const verifyImageAction = (id) => {
   return function (dispatch) {
-    dispatch({
-      type: VERIFY_IMAGE,
-    });
+    dispatch(verifyImage());
     verifyImageApi(id)
       .then(() => {
-        dispatch({
-          type: VERIFY_IMAGE_SUCCESS,
-        });
+        dispatch(verifyImageSuccess());
       })
       .catch((error) => {
-        verifyImageFailed(dispatch);
+        verifyImageFailedAction(dispatch);
       });
   };
 };

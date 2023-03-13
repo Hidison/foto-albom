@@ -1,73 +1,58 @@
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { SET_ERRORS } from "./Auth";
 import { addUserToBaseApi } from "../../utils/utils";
+import { setErrors } from "../Auth";
+import {
+  addUserToBase,
+  addUserToBaseFailed,
+  addUserToBaseSuccess,
+  register,
+  registerFailed,
+  registerSuccess,
+} from "../Register";
 
-export const REGISTER = "REGISTER";
-export const REGISTER_FAILED = "REGISTER_FAILED";
-export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
-
-export const ADD_USER_TO_BASE = "ADD_USER_TO_BASE";
-export const ADD_USER_TO_BASE_FAILED = "ADD_USER_TO_BASE_FAILED";
-export const ADD_USER_TO_BASE_SUCCESS = "ADD_USER_TO_BASE_SUCCESS";
-
-function registerFailed(dispatch, errorMessage) {
-  dispatch({
-    type: REGISTER_FAILED,
-  });
-  dispatch({
-    type: SET_ERRORS,
-    payload: {
+function registerFailedAction(dispatch, errorMessage) {
+  dispatch(registerFailed());
+  dispatch(
+    setErrors({
       submit: errorMessage,
-    },
-  });
+    })
+  );
 }
 
-function addUserToBaseFailed(dispatch) {
-  dispatch({
-    type: ADD_USER_TO_BASE_FAILED,
-  });
-  dispatch({
-    type: SET_ERRORS,
-    payload: {
+function addUserToBaseFailedAction(dispatch) {
+  dispatch(addUserToBaseFailed());
+  dispatch(
+    setErrors({
       submit: "Ошибка регистрации!",
-    },
-  });
+    })
+  );
 }
 
-const addUserToBase = (email, id) => {
+const addUserToBaseAction = (email, id) => {
   return function (dispatch) {
-    dispatch({
-      type: ADD_USER_TO_BASE,
-    });
+    dispatch(addUserToBase());
     addUserToBaseApi(email, id)
       .then(() => {
-        dispatch({
-          type: ADD_USER_TO_BASE_SUCCESS,
-        });
+        dispatch(addUserToBaseSuccess());
       })
       .catch((error) => {
-        addUserToBaseFailed(dispatch);
+        addUserToBaseFailedAction(dispatch);
       });
   };
 };
 
-export const register = (email, password) => {
+export const registerAction = (email, password) => {
   return function (dispatch) {
-    dispatch({
-      type: REGISTER,
-    });
+    dispatch(register());
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
         if (user && user.accessToken) {
-          dispatch({
-            type: REGISTER_SUCCESS,
-            payload: user,
-          });
-          dispatch(addUserToBase(email, user.uid));
+          dispatch(registerSuccess());
+          dispatch(addUserToBaseAction(email, user.uid));
         } else {
-          registerFailed(dispatch);
+          registerFailedAction(dispatch);
         }
       })
       .catch((error) => {
@@ -77,7 +62,7 @@ export const register = (email, password) => {
         } else {
           errorMessage = "Ошибка регистрации!";
         }
-        registerFailed(dispatch, errorMessage);
+        registerFailedAction(dispatch, errorMessage);
       });
   };
 };

@@ -4,9 +4,9 @@ import Header from "../Header/Header";
 import Main from "../Main/Main";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser } from "../../services/actions/App";
-import { SET_AUTH } from "../../services/actions/Auth";
 import Loader from "../Loader/Loader";
+import { getUserAction } from "../../services/actions/App";
+import { setAuth } from "../../services/Auth";
 
 function App() {
   const dispatch = useDispatch();
@@ -20,15 +20,12 @@ function App() {
   const { unModerateUserRequest } = useSelector((state) => state.unModerateUser);
 
   useEffect(() => {
-    dispatch(getUser());
+    dispatch(getUserAction());
   }, [dispatch]);
 
   useEffect(() => {
     if (user) {
-      dispatch({
-        type: SET_AUTH,
-        payload: true,
-      });
+      dispatch(setAuth(true));
     }
   }, [user, dispatch]);
 

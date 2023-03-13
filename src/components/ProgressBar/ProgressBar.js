@@ -2,37 +2,26 @@ import React, { useEffect } from "react";
 import useStorage from "../../hooks/useStorage";
 import ProgressBarStyles from "./ProgressBar.module.css";
 import Loader from "../Loader/Loader";
-import { useDispatch, useSelector } from "react-redux";
-import { SET_IS_FILE_LOADING, closeModal } from "../../services/actions/App";
-import { SET_FILE, SET_IS_UPLOAD_FILE } from "../../services/actions/AddCardModal";
+import { useDispatch } from "react-redux";
+import { closeModal } from "../../services/actions/App";
+import { setIsFileLoading } from "../../services/App";
+import { setIsUploadFile } from "../../services/AddCardModal";
 
-const ProgressBar = () => {
+const ProgressBar = ({ file, setFile }) => {
   const dispatch = useDispatch();
-  const { file } = useSelector((state) => state.addCardModal);
 
   const { progress, url } = useStorage(file);
 
   useEffect(() => {
     if (url) {
-      dispatch({
-        type: SET_FILE,
-        payload: null,
-      });
-      dispatch({
-        type: SET_IS_UPLOAD_FILE,
-        payload: false,
-      });
+      setFile(null);
+      dispatch(setIsUploadFile(false));
       dispatch(closeModal());
-      dispatch({
-        type: SET_IS_FILE_LOADING,
-        payload: false,
-      });
+      dispatch(setIsFileLoading(false));
     } else {
-      dispatch({
-        type: SET_IS_FILE_LOADING,
-        payload: true,
-      });
+      dispatch(setIsFileLoading(true));
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, url]);
 
   return (

@@ -6,9 +6,7 @@ const useFirestore = (request, request_success, request_failed, q) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch({
-      type: request,
-    });
+    dispatch(request());
     const unsubscribe = onSnapshot(
       q,
       (querySnapshot) => {
@@ -16,17 +14,10 @@ const useFirestore = (request, request_success, request_failed, q) => {
         querySnapshot.forEach((doc) => {
           data.push({ ...doc.data(), id: doc.id });
         });
-        dispatch({
-          type: request_success,
-          payload: data,
-          lastVisible: querySnapshot.docs[querySnapshot.docs.length - 1],
-        });
+        dispatch(request_success(data));
       },
       (error) => {
-        dispatch({
-          type: request_failed,
-          payload: error,
-        });
+        dispatch(request_failed(error));
       }
     );
 
