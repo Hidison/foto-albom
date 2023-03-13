@@ -2,7 +2,7 @@ import React from "react";
 import Auth from "../components/Auth/Auth";
 import { Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { register } from "../services/actions/Register";
+import { registerAction } from "../services/actions/Register";
 
 const RegisterPage = () => {
   const dispatch = useDispatch();
@@ -11,7 +11,7 @@ const RegisterPage = () => {
 
   const handleRegister = (e) => {
     e.preventDefault();
-    dispatch(register(values.email, values.password));
+    dispatch(registerAction(values.email, values.password));
   };
 
   if (auth) {

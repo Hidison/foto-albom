@@ -1,30 +1,16 @@
 import { addImageToBaseApi } from "../../utils/utils";
-
-export const SET_FILE = "SET_FILE";
-export const SET_FILE_UPLOAD_ERROR = "SET_FILE_UPLOAD_ERROR";
-export const SET_IS_UPLOAD_FILE = "SET_IS_UPLOAD_FILE";
-
-export const SET_IMAGE_SUCCESS = "SET_IMAGE_SUCCESS";
-export const ADD_IMAGE_TO_BASE = "ADD_IMAGE_TO_BASE";
-export const ADD_IMAGE_TO_BASE_FAILED = "ADD_IMAGE_TO_BASE_FAILED";
-export const ADD_IMAGE_TO_BASE_SUCCESS = "ADD_IMAGE_TO_BASE_SUCCESS";
+import { addImage, addImageFailed, addImageSuccess } from "../AddCardModal";
 
 function addImageToBaseFailed(dispatch) {
-  dispatch({
-    type: ADD_IMAGE_TO_BASE_FAILED,
-  });
+  dispatch(addImageFailed());
 }
 
 export const addImageToBase = (url, id, email) => {
   return function (dispatch) {
-    dispatch({
-      type: ADD_IMAGE_TO_BASE,
-    });
+    dispatch(addImage());
     addImageToBaseApi(url, id, email)
       .then(() => {
-        dispatch({
-          type: ADD_IMAGE_TO_BASE_SUCCESS,
-        });
+        dispatch(addImageSuccess());
       })
       .catch((error) => {
         addImageToBaseFailed(dispatch);

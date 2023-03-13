@@ -5,19 +5,19 @@ import { useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { where, orderBy, query, collection } from "firebase/firestore";
 import useFirestore from "../hooks/useFirestore";
-import {
-  GET_NOT_VERIFY_PHOTOS,
-  GET_NOT_VERIFY_PHOTOS_FAILED,
-  GET_NOT_VERIFY_PHOTOS_SUCCESS,
-} from "../services/actions/PhotoVerification";
 import { appFirestore } from "../firebase";
 import { getPageCount, getPhotosOnPage } from "../utils/utils";
 import Pagination from "../components/Pagination/Pagination";
+import {
+  getNotVerifyPhotos,
+  getNotVerifyPhotosFailed,
+  getNotVerifyPhotosSuccess,
+} from "../services/PhotoVerification";
 
 const PhotoVerificationPage = () => {
   const { user } = useSelector((state) => state.user);
   const { notVerifyPhotos } = useSelector((state) => state.getNotVerifyPhotos);
-  const { pageNumber } = useSelector((state) => state.Pagination);
+  const { pageNumber } = useSelector((state) => state.pagination);
 
   const photosOnPage = notVerifyPhotos && getPhotosOnPage(notVerifyPhotos, pageNumber);
   const totalPages = notVerifyPhotos && getPageCount(notVerifyPhotos.length, 8);
@@ -28,12 +28,7 @@ const PhotoVerificationPage = () => {
     orderBy("verificated", "desc")
   );
 
-  useFirestore(
-    GET_NOT_VERIFY_PHOTOS,
-    GET_NOT_VERIFY_PHOTOS_SUCCESS,
-    GET_NOT_VERIFY_PHOTOS_FAILED,
-    q
-  );
+  useFirestore(getNotVerifyPhotos, getNotVerifyPhotosSuccess, getNotVerifyPhotosFailed, q);
 
   if (user.email === "admin@mail.ru" || user.moderator) {
     return (
@@ -49,11 +44,13 @@ const PhotoVerificationPage = () => {
       </>
     );
   } else {
-    return <Redirect
-      to={{
-        pathname: "/",
-      }}
-    />;
+    return (
+      <Redirect
+        to={{
+          pathname: "/",
+        }}
+      />
+    );
   }
 };
 

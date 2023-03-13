@@ -32,6 +32,7 @@ const useStorage = (file) => {
     return () => {
       addImage();
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [file]);
 
   return { progress, error, url };

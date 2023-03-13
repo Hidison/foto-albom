@@ -7,7 +7,7 @@ import Pagination from "../components/Pagination/Pagination";
 import { getPageCount, getPhotosOnPage } from "../utils/utils";
 
 const MyPhotosPage = ({ photos }) => {
-  const { pageNumber } = useSelector((state) => state.Pagination);
+  const { pageNumber } = useSelector((state) => state.pagination);
   const { getPhotosRequest, getPhotosFailed } = useSelector((state) => state.getPhotos);
 
   const photosOnPage = getPhotosOnPage(photos, pageNumber);

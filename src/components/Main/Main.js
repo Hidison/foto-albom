@@ -11,11 +11,11 @@ import Modal from "../Modal/Modal";
 import AddCardModal from "../AddCardModal/AddCardModal";
 import FullSizeImg from "../FullSizeImg/FullSizeImg";
 import ModeratorsPage from "../../pages/moderators";
-import { GET_PHOTOS, GET_PHOTOS_FAILED, GET_PHOTOS_SUCCESS } from "../../services/actions/App";
 import MyPhotosPage from "../../pages/my-photos";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { where, orderBy, collection, query } from "firebase/firestore";
 import { appFirestore } from "../../firebase";
+import { getPhotos, getPhotosFailed, getPhotosSuccess } from "../../services/App";
 
 const Main = () => {
   const { user, getUserRequest } = useSelector((state) => state.user);
@@ -28,7 +28,7 @@ const Main = () => {
     orderBy("verificated", "desc")
   );
 
-  useFirestore(GET_PHOTOS, GET_PHOTOS_SUCCESS, GET_PHOTOS_FAILED, q);
+  useFirestore(getPhotos, getPhotosSuccess, getPhotosFailed, q);
 
   const myFotos = useMemo(
     () => user && photos && photos.filter((foto) => foto.owner === user.id),

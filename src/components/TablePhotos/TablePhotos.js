@@ -1,9 +1,14 @@
 import React, { useRef } from "react";
 import TablePhotosStyles from "./TablePhotos.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { SET_SELECTED_FOTO, SET_MODAL_IMG_VISIBLE } from "../../services/actions/App";
 import { useHistory } from "react-router-dom";
-import { delImage, disLikeImage, likeImage, verifyImage } from "../../services/actions/TablePhotos";
+import {
+  delImageAction,
+  disLikeImageAction,
+  likeImageAction,
+  verifyImageAction,
+} from "../../services/actions/TablePhotos";
+import { setModalImgVisible, setSelectedFoto } from "../../services/App";
 
 const TablePhotos = ({ cards }) => {
   const dispatch = useDispatch();
@@ -12,34 +17,28 @@ const TablePhotos = ({ cards }) => {
   const { user } = useSelector((state) => state.user);
 
   const handleDelClick = () => {
-    dispatch(delImage(cards.id));
+    dispatch(delImageAction(cards.id));
   };
 
   const handleVerifyPhoto = () => {
-    dispatch(verifyImage(cards.id));
+    dispatch(verifyImageAction(cards.id));
   };
 
   const history = useHistory();
 
   const handleLike = () => {
     if (auth && cards.likes.includes(user.id)) {
-      dispatch(disLikeImage(cards.id, user.id));
+      dispatch(disLikeImageAction(cards.id, user.id));
     } else if (auth && !cards.likes.includes(user.id)) {
-      dispatch(likeImage(cards.id, user.id));
+      dispatch(likeImageAction(cards.id, user.id));
     } else if (!auth) {
       history.push("/login");
     } else return;
   };
 
   const handleFotoClick = () => {
-    dispatch({
-      type: SET_SELECTED_FOTO,
-      payload: cards,
-    });
-    dispatch({
-      type: SET_MODAL_IMG_VISIBLE,
-      payload: true,
-    });
+    dispatch(setSelectedFoto(cards));
+    dispatch(setModalImgVisible(true));
   };
 
   const tipCardRef = useRef();

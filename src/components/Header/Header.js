@@ -2,7 +2,7 @@ import React from "react";
 import HeaderStyles from "./Header.module.css";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../services/actions/App";
+import { logoutAction } from "../../services/actions/App";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -10,7 +10,7 @@ const Header = () => {
   const { user, getUserRequest } = useSelector((state) => state.user);
 
   const handleLogoutClick = () => {
-    dispatch(logout());
+    dispatch(logoutAction());
   };
 
   return (

@@ -1,38 +1,24 @@
 import { moderateUserApi } from "../../utils/utils";
-import { SET_ERRORS } from "./Auth";
+import { setErrors } from "../Auth";
+import { moderatUser, moderatUserFailed, moderatUserSuccess } from "../Moderators";
 
-export const GET_MODERATED_USERS = "GET_MODERATED_USERS";
-export const GET_MODERATED_USERS_FAILED = "GET_MODERATED_USERS_FAILED";
-export const GET_MODERATED_USERS_SUCCESS = "GET_MODERATED_USERS_SUCCESS";
-
-export const MODERATE_USER = "MODERATE_USER";
-export const MODERATE_USER_FAILED = "MODERATE_USER_FAILED";
-export const MODERATE_USER_SUCCESS = "MODERATE_USER_SUCCESS";
-
-function moderateUserFailed(dispatch, errorMessage) {
-  dispatch({
-    type: MODERATE_USER_FAILED,
-  });
-  dispatch({
-    type: SET_ERRORS,
-    payload: {
+function moderateUserFailedAction(dispatch, errorMessage) {
+  dispatch(moderatUserFailed());
+  dispatch(
+    setErrors({
       email: "",
       password: "",
       submit: errorMessage,
-    },
-  });
+    })
+  );
 }
 
-export const moderateUser = (email) => {
+export const moderateUserAction = (email) => {
   return function (dispatch) {
-    dispatch({
-      type: MODERATE_USER,
-    });
+    dispatch(moderatUser());
     moderateUserApi(email)
       .then(() => {
-        dispatch({
-          type: MODERATE_USER_SUCCESS,
-        });
+        dispatch(moderatUserSuccess());
       })
       .catch((error) => {
         let errorMessage;
@@ -41,7 +27,7 @@ export const moderateUser = (email) => {
         } else {
           errorMessage = "Ошибка добавления модератора!";
         }
-        moderateUserFailed(dispatch, errorMessage);
+        moderateUserFailedAction(dispatch, errorMessage);
       });
   };
 };

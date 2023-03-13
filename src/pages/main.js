@@ -2,35 +2,29 @@ import React, { useEffect } from "react";
 import MainPageStyles from "./main.module.css";
 import TablePhotos from "../components/TablePhotos/TablePhotos";
 import { useDispatch, useSelector } from "react-redux";
-import { SET_MODAL_VISIBLE } from "../services/actions/App";
 import Loader from "../components/Loader/Loader";
-import { SET_IMAGE_SUCCESS } from "../services/actions/AddCardModal";
 import Pagination from "../components/Pagination/Pagination";
 import { getPageCount, getPhotosOnPage } from "../utils/utils";
+import { setModalVisible } from "../services/App";
+import { setImageSuccess } from "../services/AddCardModal";
 
 const MainPage = ({ photos }) => {
   const dispatch = useDispatch();
   const { getPhotosRequest, getPhotosFailed } = useSelector((state) => state.getPhotos);
   const { addImageToBaseSuccess } = useSelector((state) => state.addImageToBase);
-  const { pageNumber } = useSelector((state) => state.Pagination);
+  const { pageNumber } = useSelector((state) => state.pagination);
 
   const photosOnPage = getPhotosOnPage(photos, pageNumber);
   const totalPages = getPageCount(photos.length, 8);
 
   const openModal = () => {
-    dispatch({
-      type: SET_MODAL_VISIBLE,
-      payload: true,
-    });
+    dispatch(setModalVisible(true));
   };
 
   useEffect(() => {
     if (addImageToBaseSuccess) {
       setTimeout(() => {
-        dispatch({
-          type: SET_IMAGE_SUCCESS,
-          payload: false,
-        });
+        dispatch(setImageSuccess(false));
       }, 3000);
     }
   }, [addImageToBaseSuccess, dispatch]);
